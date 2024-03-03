@@ -2,7 +2,7 @@ public class Person {
     
     private String name;
     private String surname;
-    private String adress;
+    private String address;
     private String phone;
     private int ID;
 
@@ -11,7 +11,7 @@ public class Person {
     public Person(String name, String surname, String adress, String phone, int ID){
         this.name = name;
         this.surname = surname;
-        this.adress = adress;
+        this.address = adress;
         this.phone = phone;
         this.ID = ID;
     }
@@ -20,7 +20,7 @@ public class Person {
     public Person(){
         this.name = "";
         this.surname = "";
-        this.adress = "";
+        this.address = "";
         this.phone = "";
         this.ID = 0;
     }
@@ -35,8 +35,8 @@ public class Person {
         return surname;
     }
 
-    public String getAdress(){
-        return adress;
+    public String getAddress(){
+        return address;
     }
 
     public String getPhone(){
@@ -56,7 +56,7 @@ public class Person {
     }
 
     public void setAdress(String adress){
-        this.adress = adress;
+        this.address = adress;
     }
 
     public void setPhone(String phone){
@@ -68,7 +68,7 @@ public class Person {
     }
     
     public String toString(){
-        return "Name: " + name + " Surname: " + surname + " Adress: " + adress + " Phone: " + phone + " ID: " + ID;
+        return "Name: " + name + " Surname: " + surname + " Adress: " + address + " Phone: " + phone + " ID: " + ID;
     }
 
 }
