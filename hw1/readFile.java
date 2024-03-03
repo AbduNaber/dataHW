@@ -1,13 +1,12 @@
 import java.io.File;
 import java.util.Scanner;
 
-
 public class readFile {
     
     private String fileName;
     private File file;
 
-    private Order [] orders;
+    private Order [] orders ;
     private int orderCount = 0;
 
     private Costumer [] costumers;
@@ -16,30 +15,67 @@ public class readFile {
     private Operator [] operators;
     private int operatorCount = 0;
 
-
     public readFile(String fileName){
+
+        orders = new Order[100];
+        costumers = new Costumer[100];
+        operators = new Operator[100];
+
+
         this.fileName = fileName;
-        file = new File(fileName);
-        try {
-
-
-            Scanner fileScanner = new Scanner(file);
-            while(fileScanner.hasNextLine()){
-                String fileLine = fileScanner.nextLine();
-                
-            }
-
-
-            fileScanner.close();
-        }
-
-        catch (Exception e){
-            System.out.println("File not found");
-        }
         
 
-    }
+        file = new File(this.fileName);
+        try {
+            Scanner fileScanner = new Scanner(file);
+            
+            while(fileScanner.hasNextLine()){
+                
+                String fileLine = fileScanner.nextLine();
+                
+                String [] parsedLine = fileLine.split(";",-1);
+                
+                
+                if(isValidLine(parsedLine)== 1){
+                    if(parsedLine[0].equals("order")){
+                        
+                        Order o = new Order(parsedLine[1], Integer.parseInt(parsedLine[2]), Integer.parseInt(parsedLine[3]), Integer.parseInt(parsedLine[4]), Integer.parseInt(parsedLine[5]));
+                        
+                        orders[orderCount] = o;
+                        orderCount++;
+                       
+                    }
+                    else if(parsedLine[0].equals("retail_customer") ){
+                        Retail_Customer r = new Retail_Customer(parsedLine[1], parsedLine[2], parsedLine[3], parsedLine[4], Integer.parseInt(parsedLine[5]), Integer.parseInt(parsedLine[6]));
+                        costumers[costumerCount] = r;
+                        costumerCount++;
+                        
+                    }
+                    else if(parsedLine[0].equals("corporate_customer")){
+                        Corparate_Customer c = new Corparate_Customer(parsedLine[1], parsedLine[2], parsedLine[3], parsedLine[4], Integer.parseInt(parsedLine[5]), Integer.parseInt(parsedLine[6]), parsedLine[7]);
+                        costumers[costumerCount] = c;
+                        costumerCount++;
+                       
+                    }
+                    else if(parsedLine[0].equals("operator")){
+                        Operator op = new Operator(parsedLine[1], parsedLine[2], parsedLine[3], parsedLine[4], Integer.parseInt(parsedLine[5]), Integer.parseInt(parsedLine[6]));
+                        operators[operatorCount] = op;
+                        operatorCount++;
+                        
+                    }
+                    
 
+                
+            }
+            
+            }
+            
+            fileScanner.close();
+        }
+        catch (Exception e){
+            System.out.println("File is not found");
+        }
+    }
 
    public File getFile() {
         return file;
@@ -49,24 +85,145 @@ public class readFile {
         return fileName;
     }
 
+    public Order[] getOrders() {
+        return orders;
+    }
 
-    private boolean isValidLine(String [] parsedLine){
-        if(parsedLine[0].isEmpty()){
-            return false;
-        }
+    public int getOrderCount() {
+        return orderCount;
+    }
 
-        String [] typeList = {"order","retail_customer","corporate_customer","operator"};
+    public Costumer[] getCostumers() {
+        return costumers;
+    }
 
-        if(parsedLine[0] == "order"){
+    public int getCostumerCount() {
+        return costumerCount;
+    }
 
+    public Operator[] getOperators() {
+        return operators;
+    }
+
+    public int getOperatorCount() {
+        return operatorCount;
+    }
+
+    private int isValidLine(String [] parsedLine){
+        
+        if(parsedLine[0].equals("order")){
+            
+            
             if(parsedLine.length != 6){
-                return false;
+                System.out.println("The line is not valid.(LENGTH PROBLEM)");
+                return 0;
             }
+            if(parsedLine[1].isEmpty()){
+                System.out.println("The line is not valid.(INVALID ORDER NAME)");
+                return 0;
+            }
+
+            try{
+                int count = Integer.parseInt(parsedLine[2]);
+                int total_price = Integer.parseInt(parsedLine[3]);
+                int status = Integer.parseInt(parsedLine[4]);
+                int costumer_id = Integer.parseInt(parsedLine[5]);
+
+                if( count < 0 || total_price < 0 || status < 0 || costumer_id < 0){
+                    System.out.println("The line is not valid.(NON INTEGER VALUE)");
+                    return 0;
+                }
+                
+            }
+            catch (Exception e) {
+                System.out.println("The line is not valid.(INVALID INTEGER)");
+                return 0;
+            }
+            return 1;
             
         }
 
+        else if(parsedLine[0].equals("retail_customer")){
 
+            if( parsedLine.length != 7){
+                System.out.println("The line is not valid.(LENGTH PROBLEM)");
+                return 0;
+            }
+            if(parsedLine[1].isEmpty() || parsedLine[2].isEmpty() || parsedLine[3].isEmpty() || parsedLine[4].isEmpty()){
+                System.out.println("The line is not valid.(EMPTY STRING)");
+                return 0;
+            }
 
+            try {
+                int ID = Integer.parseInt(parsedLine[5]);
+                int op_ID = Integer.parseInt(parsedLine[6]);
+                if( ID < 0 || op_ID < 0){
+                    System.out.println("The line is not valid.(NON INTEGER VALUE)");
+                    return 0;
+                }
+
+            }
+            catch (Exception e) {
+                System.out.println("The line is not valid.(INVALID INTEGER)");
+                return 0;
+            }
+            return 1;
+        }
+        else if (parsedLine[0].equals("corporate_customer")){
+            if( parsedLine.length != 8){
+                System.out.println("The line is not valid.(LENGTH PROBLEM)");
+                return 0;
+            }
+            if(parsedLine[1].isEmpty() || parsedLine[2].isEmpty() || parsedLine[3].isEmpty() || parsedLine[4].isEmpty() || parsedLine[7].isEmpty()){
+                System.out.println("The line is not valid.(EMPTY STRING)");
+                return 0;
+            }
+            try {
+                int ID = Integer.parseInt(parsedLine[5]);
+                int op_ID = Integer.parseInt(parsedLine[6]);
+                if( ID < 0 || op_ID < 0){
+                    System.out.println("The line is not valid.(NON INTEGER VALUE)");
+                    return 0;
+                }
+
+            }
+            catch (Exception e) {
+                System.out.println("The line is not valid.(INVALID INTEGER)");
+                return 0;
+            }
+            return 1;
+        }
+        else if ( parsedLine[0].equals("operator")){
+            if( parsedLine.length != 7){
+                System.out.println("The line is not valid.(LENGTH PROBLEM)");
+                return 0;
+            }
+            if(parsedLine[1].isEmpty() || parsedLine[2].isEmpty() || parsedLine[3].isEmpty() || parsedLine[4].isEmpty()){
+                System.out.println("The line is not valid.(EMPTY STRING)");
+                return 0;
+            } 
+            try {
+                int ID = Integer.parseInt(parsedLine[5]);
+                int wage = Integer.parseInt(parsedLine[6]);
+                if( ID < 0 || wage < 0){
+                    System.out.println("The line is not valid.(NON INTEGER VALUE)");
+                    return 0;
+                }
+
+            }
+            catch (Exception e) {
+                System.out.println("The line is not valid.(INVALID INTEGER)");
+                return 0;
+            }
+            return 1;
+        }
+
+        else {
+            System.out.println("Unkown IDENTIFIER");
+            return 0;
+        }
     }
+
+    
     
 }

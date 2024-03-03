@@ -28,10 +28,50 @@ public class Order {
         System.out.print("Product name: " + product_name);
         System.out.print(" - Count: " + count);
         System.out.print(" - Total price: " + total_price);
-        System.out.println(" - Status: " + status);
-        
+        print_status();
         
     }
+
+    private void print_status(){
+        if (status == 0){
+            System.out.println(" - Status: Initialized");
+        }
+        else if (status == 1){
+            System.out.println(" - Status: Processing");
+        }
+        else if (status == 2){
+            System.out.println(" - Status: Completed");
+
+        }
+        else if(status == 3){
+            System.out.println(" - Status: Cancelled");
+        }
+
+    
+    }
+
+
+    public String getProduct_name(){
+        return product_name;
+    }
+
+    public int getCount(){
+        return count;
+    }
+
+    public int getTotal_price(){
+        return total_price;
+    }
+
+    public int getStatus(){
+        return status;
+    }
+
+    public int getCostumerID(){
+        return CostumerID;
+    }
+
+
     
     public boolean equals(Object o){
 
