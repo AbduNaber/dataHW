@@ -7,7 +7,7 @@ public class Operator extends Person{
         this.wage = wage;
         costumers = new Costumer[100];
     }
-
+    
     public void print_Operator(){
         System.out.println("Name & Surname: " + getName() + " " + getSurname());
         System.out.println("Address: " + getAddress());

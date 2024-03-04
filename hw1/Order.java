@@ -71,21 +71,4 @@ public class Order {
         return CostumerID;
     }
 
-
-    
-    public boolean equals(Object o){
-
-        if (o == this){
-            return true;
-        }
-
-        if (o instanceof Order){
-            Order p = (Order) o;
-            return product_name.equals(p.product_name) && count == p.count && total_price == p.total_price && status == p.status && CostumerID == p.CostumerID;
-        }
-        else{
-            return false;
-        }
-    }
-
 }

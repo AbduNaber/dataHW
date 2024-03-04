@@ -1,23 +1,30 @@
 import java.io.File;
 import java.util.Scanner;
 
+
+/**
+ * This class is used to read the file and create the objects of the classes.
+ * that classes are Order, Costumer, Operator.
+ * also checks the validity of the lines in the file.
+ */
 public class readFile {
     
-    private String fileName;
+    private String fileName; // Name of the file
     private File file;
 
-    private Order [] orders ;
+    
+    private Order [] orders ; // Orders read from file
     private int orderCount = 0;
 
-    private Costumer [] costumers;
+    private Costumer [] costumers; // Costumers read from file
     private int costumerCount = 0;
 
-    private Operator [] operators;
+    private Operator [] operators; // Operatorsread from file
     private int operatorCount = 0;
 
     public readFile(String fileName){
 
-        orders = new Order[100];
+        orders = new Order[100]; 
         costumers = new Costumer[100];
         operators = new Operator[100];
 
@@ -26,17 +33,20 @@ public class readFile {
         
 
         file = new File(this.fileName);
+        
         try {
-            Scanner fileScanner = new Scanner(file);
+            Scanner fileScanner = new Scanner(file); // file input to read line by line
             
-            while(fileScanner.hasNextLine()){
+            while(fileScanner.hasNextLine()){  
                 
                 String fileLine = fileScanner.nextLine();
                 
-                String [] parsedLine = fileLine.split(";",-1);
+                String [] parsedLine = fileLine.split(";",-1); // splits according to ";" , -1 for splits all pieces.
                 
                 
-                if(isValidLine(parsedLine)== 1){
+                if(isValidLine(parsedLine)== 1){ // if parsed line is valid 
+
+                    // if that line is order's line
                     if(parsedLine[0].equals("order")){
                         
                         Order o = new Order(parsedLine[1], Integer.parseInt(parsedLine[2]), Integer.parseInt(parsedLine[3]), Integer.parseInt(parsedLine[4]), Integer.parseInt(parsedLine[5]));
@@ -45,18 +55,24 @@ public class readFile {
                         orderCount++;
                        
                     }
+
+                    // if that line is retail_customer's line
                     else if(parsedLine[0].equals("retail_customer") ){
                         Retail_Customer r = new Retail_Customer(parsedLine[1], parsedLine[2], parsedLine[3], parsedLine[4], Integer.parseInt(parsedLine[5]), Integer.parseInt(parsedLine[6]));
                         costumers[costumerCount] = r;
                         costumerCount++;
                         
                     }
+
+                    //if that line is corporate_customer's line
                     else if(parsedLine[0].equals("corporate_customer")){
                         Corparate_Customer c = new Corparate_Customer(parsedLine[1], parsedLine[2], parsedLine[3], parsedLine[4], Integer.parseInt(parsedLine[5]), Integer.parseInt(parsedLine[6]), parsedLine[7]);
                         costumers[costumerCount] = c;
                         costumerCount++;
                        
                     }
+
+                    // if that line is operator's class
                     else if(parsedLine[0].equals("operator")){
                         Operator op = new Operator(parsedLine[1], parsedLine[2], parsedLine[3], parsedLine[4], Integer.parseInt(parsedLine[5]), Integer.parseInt(parsedLine[6]));
                         operators[operatorCount] = op;
@@ -70,7 +86,7 @@ public class readFile {
             
             }
             
-            fileScanner.close();
+            fileScanner.close(); // close file input
         }
         catch (Exception e){
             System.out.println("File is not found");
@@ -109,6 +125,10 @@ public class readFile {
         return operatorCount;
     }
 
+
+    /**
+     * checks validity of lines
+     */
     private int isValidLine(String [] parsedLine){
         
         if(parsedLine[0].equals("order")){
@@ -129,7 +149,7 @@ public class readFile {
                 int status = Integer.parseInt(parsedLine[4]);
                 int costumer_id = Integer.parseInt(parsedLine[5]);
 
-                if( count < 0 || total_price < 0 || status < 0 || costumer_id < 0){
+                if( count <= 0 || total_price <= 0 || status < 0 || costumer_id <= 0){
                     System.out.println("The line is not valid.(NON INTEGER VALUE)");
                     return 0;
                 }
@@ -157,7 +177,7 @@ public class readFile {
             try {
                 int ID = Integer.parseInt(parsedLine[5]);
                 int op_ID = Integer.parseInt(parsedLine[6]);
-                if( ID < 0 || op_ID < 0){
+                if( ID <= 0 || op_ID <= 0){
                     System.out.println("The line is not valid.(NON INTEGER VALUE)");
                     return 0;
                 }
@@ -181,7 +201,7 @@ public class readFile {
             try {
                 int ID = Integer.parseInt(parsedLine[5]);
                 int op_ID = Integer.parseInt(parsedLine[6]);
-                if( ID < 0 || op_ID < 0){
+                if( ID <= 0 || op_ID <= 0){
                     System.out.println("The line is not valid.(NON INTEGER VALUE)");
                     return 0;
                 }
@@ -205,7 +225,7 @@ public class readFile {
             try {
                 int ID = Integer.parseInt(parsedLine[5]);
                 int wage = Integer.parseInt(parsedLine[6]);
-                if( ID < 0 || wage < 0){
+                if( ID <= 0 || wage <= 0){
                     System.out.println("The line is not valid.(NON INTEGER VALUE)");
                     return 0;
                 }

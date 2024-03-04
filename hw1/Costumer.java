@@ -10,6 +10,9 @@ public class Costumer extends Person{
         orders = new Order[100];
     }
 
+    /**
+     * Prints the costumer's information
+     */
     public void print_costumer(){
         System.out.println("Name & Surname: " + getName());
         System.out.println("Address: " + getAddress());
@@ -19,6 +22,10 @@ public class Costumer extends Person{
         print_orders();
     }
 
+
+    /**
+     * Prints the costumer's orders
+     */
     protected void print_orders(){
         
         for ( int i =0  ; i < orders.length ; i++){
@@ -33,6 +40,10 @@ public class Costumer extends Person{
     public void define_order(Order [] o){
         orders = o;
     }
+
+    /**
+     * Adds an order to the costumer
+     */
     public void add_order(Order o){
         for (int i = 0; i < orders.length; i++){
             if (orders[i] == null){
