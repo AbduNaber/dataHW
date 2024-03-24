@@ -1,4 +1,5 @@
-public abstract class eDevice implements Device{
+
+public abstract class eDevice implements Device , Comparable<eDevice>{
 
     String category;
     String name;
@@ -6,7 +7,14 @@ public abstract class eDevice implements Device{
     int quantity;
 
 
-
+    /**
+     * Constructor for eDevice
+     * complexity: O(1)
+     * @param category
+     * @param name
+     * @param price
+     * @param quantity
+     */
     public eDevice(String category, String name, int price, int quantity){
         this.category = category;
         this.name = name;
@@ -14,35 +22,79 @@ public abstract class eDevice implements Device{
         this.quantity = quantity;
     }
 
+
+    /**
+     * Returns the category of the device
+     * complexity: O(1)
+     * @return the category of the device
+     */
     public String getCategory(){
         return category;
     }
 
+
+    /**
+     * Returns the name of the device
+     * complexity: O(1)
+     * @return the name of the device
+     */
     public String getName(){
         return name;
     }
-
+    /**
+     * Returns the price of the device
+     * complexity: O(1)
+     * @return the price of the device
+     */
     public int getPrice(){
         return price;
     }
 
+    /**
+     * Returns the quantity of the device
+     * complexity: O(1)
+     * @return the quantity of the device
+     */
     public int getQuantity(){
         return quantity;
     }
 
+    /**
+     * Sets the category of the device
+     * complexity: O(1)
+     * @param category
+     * @return void
+     */
     public void setCategory(String category){
         this.category = category;
     }
 
+    /**
+     * Sets the name of the device
+     * complexity: O(1)
+     * @param name
+     * @return void
+     */
     public void setName(String name){
         this.name = name;
     }
 
+    /**
+     * Sets the price of the device
+     * complexity: O(1)
+     * @param price
+     * @return void
+     */
     public void setPrice(int price){
         this.price = price;
     }
 
-
+    /**
+     * Sets the quantity of the device
+     * complexity: O(1)
+     * @param quantity
+     * @return void
+     */
     public void setQuantity(int quantity){
         this.quantity = quantity;
     }
@@ -75,5 +127,8 @@ public abstract class eDevice implements Device{
         eDevice device = (eDevice) obj;
         return device.getCategory().equals(category) && device.getName().equals(name) && device.getPrice() == price && device.getQuantity() == quantity;
     }
-
+    
+    public int compareTo(eDevice device){
+        return this.price - device.price;
+    }
 }
