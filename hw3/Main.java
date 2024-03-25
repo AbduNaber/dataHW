@@ -12,7 +12,7 @@ public class Main{
         int option = -1;
         String category= "";
         String name = "";
-        int price = 0;
+        double price = 0.0;
         int quantity =0 ;
         eDevice tmp = null;
         //main loop
@@ -54,44 +54,65 @@ public class Main{
                                 category = System.console().readLine();
                                 System.out.println("Enter device name: ");
                                 name = System.console().readLine();
+                                
+                                if(name == null || name.equals(""))
+                                    throw new IllegalArgumentException("invalid name");
+
                                 System.out.println("Enter price: ");
-                                price = Integer.parseInt(System.console().readLine());
+                                price = Double.parseDouble(System.console().readLine());
                                 System.out.println("Enter quantity: ");
                                 quantity = Integer.parseInt(System.console().readLine());
                                 eDevice device = inventory.createDevice(category,name,price,quantity);
                                 inventory.addDevice(device);
-                                System.out.println(category + " " + name + " " + price+ " "+ quantity +" amount added...");
+                                System.out.println(category + " " + name + " " + String.format("%.2f", price)+ " "+ quantity +" amount added...");
                                 break;
                         case 2:
-                            
+                                if(inventory.isEmpty())
+                                        throw new IllegalArgumentException("Inventory is empty");
+
                                 System.out.println("Enter the device name you want to remove: ");
                                 name = System.console().readLine();
                                 tmp = inventory.findDevice(name) ;
+                                if(tmp == null){
+                                    throw new IllegalArgumentException("Device not found");
+                                }
                                 inventory.removeDevice(tmp);
-                                System.out.println(name + " removed...");
                                 break;
-                            
+
                         case 3:
+                                if(inventory.isEmpty())
+                                        throw new IllegalArgumentException("Inventory is empty");
+
                                 System.out.println("Enter the device name you want to update: ");
                                 name = System.console().readLine();
                                 inventory.updateDevice(name);
                                 break;
                         case 4:
+                                if(inventory.isEmpty())
+                                        throw new IllegalArgumentException("Inventory is empty");
                                 inventory.displayInventory();
                                 break;
                         case 5:
+                                if(inventory.isEmpty())
+                                        throw new IllegalArgumentException("Inventory is empty");
+
                                 System.out.println("Cheapest device is: ");
                                 tmp = inventory.findCheapest();
                                 System.out.println(tmp);
                                 break;
                         case 6:
+                                if(inventory.isEmpty())
+                                        throw new IllegalArgumentException("Inventory is empty");
                                 inventory.sortInventory();
                                 break;
                         case 7:
-                                System.out.println("Total inventory value: " + inventory.getInventoryValue()); 
+                                if(inventory.isEmpty())
+                                        throw new IllegalArgumentException("Inventory is empty");
+                                System.out.println("Total inventory value: " + String.format("%.2f",inventory.getInventoryValue())); 
                                 break;           
                         case 8:
-
+                                if(inventory.isEmpty())
+                                        throw new IllegalArgumentException("Inventory is empty");
                                 System.out.println("Enter the device name you want to restock: ");
                                 name = System.console().readLine();
                                 inventory.restockDevice(name);

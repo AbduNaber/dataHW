@@ -1,13 +1,11 @@
 Electronics Shop Inventory Report
-Generated on: Sun Mar 24 23:55:52 TRT 2024
+Generated on: Mon Mar 25 18:48:30 TRT 2024
 ---------------------------------------
 | No. | Category    | Name                | Price   | Quantity |
 ---------------------------------------
-| 1 | Tv | a | 1 | 1 |
-| 2 | Tv | lg oled | 1 | 12312 |
-| 3 | Watch | w | 1 | 1 |
+| 1 | Tv | Abdu | 12.00 | 12 |
 ---------------------------------------
 Summary:
-Total number of devices: 3
-Total inventory value: 12314.0
+Total number of devices: 1
+Total inventory value: 144.0
 End of report

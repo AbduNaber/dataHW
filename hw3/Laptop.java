@@ -9,7 +9,7 @@ public class Laptop extends eDevice{
      * @param quantity
      * @return void
      */
-    public Laptop(String category, String name, int price, int quantity){
+    public Laptop(String category, String name, double price, int quantity){
         super(category, name, price, quantity);
     }
 }

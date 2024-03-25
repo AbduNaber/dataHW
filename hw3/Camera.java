@@ -8,7 +8,7 @@ public class Camera extends eDevice{
      * @param quantity
      * @return void
      */
-    public Camera(String category, String name, int price, int quantity){
+    public Camera(String category, String name, double price, int quantity){
         super(category, name, price, quantity);
     }
 }

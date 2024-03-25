@@ -8,7 +8,7 @@ public class Tv extends eDevice{
      * @param quantity
      * @return void
      */
-    public Tv(String category, String name, int price, int quantity){
+    public Tv(String category, String name, double price, int quantity){
         super(category, name, price, quantity);
     }
 }

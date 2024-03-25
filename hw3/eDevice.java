@@ -3,7 +3,7 @@ public abstract class eDevice implements Device , Comparable<eDevice>{
 
     String category;
     String name;
-    int price;
+    double price;
     int quantity;
 
 
@@ -15,7 +15,7 @@ public abstract class eDevice implements Device , Comparable<eDevice>{
      * @param price
      * @param quantity
      */
-    public eDevice(String category, String name, int price, int quantity){
+    public eDevice(String category, String name, double price, int quantity){
         this.category = category;
         this.name = name;
         this.price = price;
@@ -46,7 +46,7 @@ public abstract class eDevice implements Device , Comparable<eDevice>{
      * complexity: O(1)
      * @return the price of the device
      */
-    public int getPrice(){
+    public double getPrice(){
         return price;
     }
 
@@ -85,7 +85,7 @@ public abstract class eDevice implements Device , Comparable<eDevice>{
      * @param price
      * @return void
      */
-    public void setPrice(int price){
+    public void setPrice(double price){
         this.price = price;
     }
 
@@ -106,7 +106,7 @@ public abstract class eDevice implements Device , Comparable<eDevice>{
      */
     @Override
     public String toString(){
-        return "Category: " + category + ", Name: " + name + ", Price: " + price + ", Quantity: " + quantity;
+        return "Category: " + category + ", Name: " + name + ", Price: " + String.format("%.2f", this.price) + ", Quantity: " + quantity;
     }
 
 
@@ -129,6 +129,14 @@ public abstract class eDevice implements Device , Comparable<eDevice>{
     }
     
     public int compareTo(eDevice device){
-        return this.price - device.price;
+        if(this.getPrice() > device.getPrice()){
+            return 1;
+        }
+        else if(this.getPrice() < device.getPrice()){
+            return -1;
+        }
+        else{
+            return 0;
+        }
     }
 }

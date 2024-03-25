@@ -24,7 +24,7 @@ public interface Device {
      * complexity: O(1)
      * @return the price of the device
      */
-    public int getPrice();
+    public double getPrice();
 
 
     /**
@@ -58,7 +58,7 @@ public interface Device {
      * @param price
      * @return void
      */
-    public void setPrice(int price);
+    public void setPrice(double price);
 
 
     /**

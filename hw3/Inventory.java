@@ -26,7 +26,7 @@ public class Inventory{
      * @param quantity
      * @return eDevice
      */
-    public eDevice createDevice(String category,String name,int price,int quantity){
+    public eDevice createDevice(String category,String name,double price,int quantity){
         
         switch(category){
 
@@ -83,15 +83,14 @@ public class Inventory{
      */
     public void removeDevice(eDevice device){
 
-        if(findDevice(device.getName())== null){
-            throw new IllegalArgumentException("Device not found");
-        }
-
+       
+        System.out.println(device.getName() + " removed...");
         for (ArrayList<eDevice> list : inventory){
             if(list.get(0).getCategory().equals(device.getCategory())){
                 list.remove(device);
             }
         }
+       
     }
     
     /**
@@ -104,11 +103,14 @@ public class Inventory{
 
         
         eDevice tmp = this.findDevice(name) ;
+        if(tmp == null){
+            throw new IllegalArgumentException("Device not found");
+        }
         System.out.println("Enter new price (leave blank to keep current price): ");   
         String newPrice = System.console().readLine();
 
         if(newPrice.length() > 0){
-            tmp.setPrice(Integer.parseInt(newPrice));
+            tmp.setPrice(Double.parseDouble(newPrice));
         }
         System.out.println("Enter new quantity (leave blank to keep current quantity): ");
         String newQuantity = System.console().readLine();
@@ -153,6 +155,9 @@ public class Inventory{
                 System.out.println(i +". " + d.toString());
                 i++;
             }
+        }
+        if(i == 1){
+            System.out.println("No devices in inventory");
         }
     }
     /**
@@ -222,6 +227,9 @@ public class Inventory{
     public void restockDevice(String name){
 
         eDevice tmp = this.findDevice(name) ;
+        if(tmp == null){
+            throw new IllegalArgumentException("Device not found");
+        }
         System.out.println("Do you want to add or remove stock? (Add/Remove): ");
         String action = System.console().readLine();
         if(action.equals("Add")){
@@ -258,7 +266,7 @@ public class Inventory{
             int i = 1;
             for (ArrayList<eDevice> list : inventory){
                 for (eDevice d : list){
-                    writer.write("| " + i + " | " + d.getCategory() + " | " + d.getName() + " | " + d.getPrice() + " | " + d.getQuantity() + " |\n");
+                    writer.write("| " + i + " | " + d.getCategory() + " | " + d.getName() + " | " + String.format("%.2f", d.getPrice()) + " | " + d.getQuantity() + " |\n");
                     i++;
                 }
             }
@@ -274,5 +282,8 @@ public class Inventory{
         }
 
 
+    }
+    public boolean isEmpty(){
+        return inventory.isEmpty();
     }
 }

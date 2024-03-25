@@ -8,7 +8,7 @@ public class Smartphone extends eDevice{
      * @param quantity
      * @return void
      */
-    public Smartphone(String category, String name, int price, int quantity){
+    public Smartphone(String category, String name, double price, int quantity){
         super(category, name, price, quantity);
     }
 }
