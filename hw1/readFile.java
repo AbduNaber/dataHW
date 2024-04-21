@@ -44,8 +44,13 @@ public class readFile {
                 String [] parsedLine = fileLine.split(";",-1); // splits according to ";" , -1 for splits all pieces.
                 
                 
-                if(isValidLine(parsedLine)== 1){ // if parsed line is valid 
+                if( isValidLine(parsedLine) == 1) { // if parsed line is valid 
+                   
+                   if(IDChecker(Integer.parseInt(parsedLine[5])) == 1){
+                        //System.out.println("ID is already used.");
+                        continue;
 
+                     }
                     // if that line is order's line
                     if(parsedLine[0].equals("order")){
                         
@@ -78,19 +83,19 @@ public class readFile {
                         operators[operatorCount] = op;
                         operatorCount++;
                         
-                    }
-                    
-
-                
+                    }   
             }
             
-            }
             
+            
+            }
             fileScanner.close(); // close file input
         }
         catch (Exception e){
-            System.out.println("File is not found");
+            System.out.println(e);
         }
+    
+
     }
 
    public File getFile() {
@@ -135,11 +140,12 @@ public class readFile {
             
             
             if(parsedLine.length != 6){
-                System.out.println("The line is not valid.(LENGTH PROBLEM)");
+                //System.out.println("The line is not valid.(LENGTH PROBLEM)");
                 return 0;
+                
             }
             if(parsedLine[1].isEmpty()){
-                System.out.println("The line is not valid.(INVALID ORDER NAME)");
+                //System.out.println("The line is not valid.(INVALID ORDER NAME)");
                 return 0;
             }
 
@@ -149,14 +155,14 @@ public class readFile {
                 int status = Integer.parseInt(parsedLine[4]);
                 int costumer_id = Integer.parseInt(parsedLine[5]);
 
-                if( count <= 0 || total_price <= 0 || status < 0 || costumer_id <= 0){
-                    System.out.println("The line is not valid.(NON INTEGER VALUE)");
+                if( count <= 0 || total_price <= 0 || status < 0 || costumer_id <= 0 || status > 3){
+                    //System.out.println("The line is not valid.(NON INTEGER VALUE)");
                     return 0;
                 }
                 
             }
             catch (Exception e) {
-                System.out.println("The line is not valid.(INVALID INTEGER)");
+                //System.out.println("The line is not valid.(INVALID INTEGER)");
                 return 0;
             }
             return 1;
@@ -166,84 +172,96 @@ public class readFile {
         else if(parsedLine[0].equals("retail_customer")){
 
             if( parsedLine.length != 7){
-                System.out.println("The line is not valid.(LENGTH PROBLEM)");
+               // System.out.println("The line is not valid.(LENGTH PROBLEM)");
                 return 0;
             }
             if(parsedLine[1].isEmpty() || parsedLine[2].isEmpty() || parsedLine[3].isEmpty() || parsedLine[4].isEmpty()){
-                System.out.println("The line is not valid.(EMPTY STRING)");
+               // System.out.println("The line is not valid.(EMPTY STRING)");
                 return 0;
             }
 
             try {
                 int ID = Integer.parseInt(parsedLine[5]);
                 int op_ID = Integer.parseInt(parsedLine[6]);
-                if( ID <= 0 || op_ID <= 0){
-                    System.out.println("The line is not valid.(NON INTEGER VALUE)");
+                if( ID <= 0 || op_ID <= 0 || ID == op_ID){
+                   // System.out.println("The line is not valid.(NON INTEGER VALUE)");
                     return 0;
                 }
 
             }
             catch (Exception e) {
-                System.out.println("The line is not valid.(INVALID INTEGER)");
+              //  System.out.println("The line is not valid.(INVALID INTEGER)");
                 return 0;
             }
             return 1;
         }
         else if (parsedLine[0].equals("corporate_customer")){
             if( parsedLine.length != 8){
-                System.out.println("The line is not valid.(LENGTH PROBLEM)");
+               // System.out.println("The line is not valid.(LENGTH PROBLEM)");
                 return 0;
             }
             if(parsedLine[1].isEmpty() || parsedLine[2].isEmpty() || parsedLine[3].isEmpty() || parsedLine[4].isEmpty() || parsedLine[7].isEmpty()){
-                System.out.println("The line is not valid.(EMPTY STRING)");
+              //  System.out.println("The line is not valid.(EMPTY STRING)");
                 return 0;
             }
             try {
                 int ID = Integer.parseInt(parsedLine[5]);
                 int op_ID = Integer.parseInt(parsedLine[6]);
-                if( ID <= 0 || op_ID <= 0){
-                    System.out.println("The line is not valid.(NON INTEGER VALUE)");
+                if( ID <= 0 || op_ID <= 0 || ID == op_ID){
+                  //  System.out.println("The line is not valid.(NON INTEGER VALUE)");
                     return 0;
                 }
 
             }
             catch (Exception e) {
-                System.out.println("The line is not valid.(INVALID INTEGER)");
+               // System.out.println("The line is not valid.(INVALID INTEGER)");
                 return 0;
             }
             return 1;
         }
         else if ( parsedLine[0].equals("operator")){
             if( parsedLine.length != 7){
-                System.out.println("The line is not valid.(LENGTH PROBLEM)");
+              //  System.out.println("The line is not valid.(LENGTH PROBLEM)");
                 return 0;
             }
             if(parsedLine[1].isEmpty() || parsedLine[2].isEmpty() || parsedLine[3].isEmpty() || parsedLine[4].isEmpty()){
-                System.out.println("The line is not valid.(EMPTY STRING)");
+              //  System.out.println("The line is not valid.(EMPTY STRING)");
                 return 0;
             } 
             try {
                 int ID = Integer.parseInt(parsedLine[5]);
                 int wage = Integer.parseInt(parsedLine[6]);
                 if( ID <= 0 || wage <= 0){
-                    System.out.println("The line is not valid.(NON INTEGER VALUE)");
+                //    System.out.println("The line is not valid.(NON INTEGER VALUE)");
                     return 0;
                 }
 
             }
             catch (Exception e) {
-                System.out.println("The line is not valid.(INVALID INTEGER)");
+              //  System.out.println("The line is not valid.(INVALID INTEGER)");
                 return 0;
             }
             return 1;
         }
 
         else {
-            System.out.println("Unkown IDENTIFIER");
+           // System.out.println("Unkown IDENTIFIER");
             return 0;
         }
     }
-
+    private int IDChecker(int ID){
+        for (int i = 0; i < costumerCount; i++){
+            if (costumers[i].getID() == ID){
+                return 1;
+            }
+        }
+        for (int i = 0; i < operatorCount; i++){
+            if (operators[i].getID() == ID){
+                return 1;
+            }
+        }
+        return 0;
+    }
     
     
 }

@@ -6,51 +6,65 @@ public class TrackingProgram {
         Order [] orders = new Order[100];
         Costumer [] costumers = new Costumer[100];
         Operator [] operators = new Operator[100];
-    
+    	
 
-        readFile file = new readFile("content"); // file that read
+        readFile file = new readFile("content.txt"); // file that read
 
-
+	
         orders = file.getOrders(); // orders arr from file
         costumers = file.getCostumers(); // costumers arr from file
         operators = file.getOperators(); // operator arr from file
+        
 
+        Order [] tempOrders ;
+        Costumer [] tempCostumers ;
+        
+        int t;
         // fill Costumer's order with orders from file
-        for (int i = 0; i < file.getOrderCount(); i++){   
-            for (int j = 0; j < file.getCostumerCount(); j++){
-                if (orders[i].getCostumerID() == costumers[j].getID()){
-                    costumers[j].add_order(orders[i]);
+        for (int i = 0; i < file.getCostumerCount(); i++){   
+            
+            tempOrders = new Order[100];
+            t = 0;
+            for (int j = 0; j < file.getOrderCount() ; j++){
+                if (orders[j].getCostumerID() == costumers[i].getID()){
+                    tempOrders[t] = orders[j];
+                    t++;
                 }
             }
+            costumers[i].define_orders(tempOrders);
         }
 
         // fill operator's costumer with costumer from file
-        for (int i = 0; i < file.getCostumerCount(); i++){
-            for (int j = 0; j < file.getOperatorCount(); j++){
-                if (costumers[i].getOperatorID() == operators[j].getID()){
-                    operators[j].add_costumer(costumers[i]);
+        for (int i = 0; i < file.getOperatorCount() ; i++){
+            tempCostumers = new Costumer[100];
+            t=0;
+            for (int j = 0; j <file.getCostumerCount() ; j++){
+                
+                if (costumers[j].getOperatorID() == operators[i].getID()){
+                    
+                    tempCostumers[t] = costumers[j];
+                    t++;
                 }
             }
+            operators[i].define_costumers(tempCostumers);
         }
 
 
-        // MENU (-1 for exit)
-        int choiceID = 0;
-        String tmp = "" ;
-        int flag;
-        while( choiceID != -1){
+        int choiceID; // to read from console
+        String tmp = "" ;// to read from console
+        int flag; // to check if there is a person with this ID
+ 
+      
             System.out.println("Please enter your ID...");
             try{
                 tmp = System.console().readLine();
                 choiceID = Integer.parseInt(tmp);
             }
             catch (Exception e){
-                System.out.println("Please enter a valid ID");
+                System.out.println("No operator/customer was found with ID 1503. Please try again.");
+                return ;
             }
-            if (choiceID == -1){
-                System.out.println("Goodbye!");
-                break;
-            }
+            
             flag = 0;
             for (int i = 0; i < file.getOperatorCount(); i++){
                 if (choiceID == operators[i].getID()){
@@ -75,6 +89,7 @@ public class TrackingProgram {
             if(flag == 0){
                 System.out.println("THERE IS NO PERSON WTIH THIS ID!");
                 System.out.println("----------------------------");
+                return ;
             }
 
 
@@ -87,5 +102,5 @@ public class TrackingProgram {
     }
 
 
-}
+
 

@@ -14,7 +14,7 @@ public class Costumer extends Person{
      * Prints the costumer's information
      */
     public void print_costumer(){
-        System.out.println("Name & Surname: " + getName());
+        System.out.println("Name & Surname: " + getName() + " " + getSurname());
         System.out.println("Address: " + getAddress());
         System.out.println("Phone: " + getPhone());
         System.out.println("ID: " + getID());
@@ -37,7 +37,7 @@ public class Costumer extends Person{
         }
     }
 
-    public void define_order(Order [] o){
+    public void define_orders(Order [] o){
         orders = o;
     }
 

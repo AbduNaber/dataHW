@@ -9,7 +9,7 @@ public class Corparate_Customer extends Costumer {
     
     @Override
     public void print_costumer() {
-        System.out.println("Name & Surname: " + getName());
+        System.out.println("Name & Surname: " + getName() + " " + getSurname());
         System.out.println("Address: " + getAddress());
         System.out.println("Phone: " + getPhone());
         System.out.println("ID: " + getID());
