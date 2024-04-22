@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"hw4","l":"Directory"},{"p":"hw4","l":"File"},{"p":"hw4","l":"FileSystem"},{"p":"hw4","l":"FileSystemElement"},{"p":"hw4","l":"Main"}]
