@@ -65,11 +65,12 @@ public class Main {
                     if(type.equals("f")){
                         System.out.print("Enter name for new file: ");
                         String name = System.console().readLine();
-                        new File(name, (Directory)currentElement);
                         if(fs.search(name, currentElement) != null){
                             System.out.println("File already exists.");
                             break;
                         }
+                        new File(name, (Directory)currentElement);
+                        
                         System.out.println("File created: " + name);
                     }
                     else if(type.equals("d")){
