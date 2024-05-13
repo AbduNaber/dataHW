@@ -1,7 +1,7 @@
 public class tester {
 
 	public static void main(String[] args) {
-		int my_array[] = {4, 2, 6, 5, 1, 8, 7, 3}; // this array will be edited by TA during assessment...
+		int my_array[] = {1,2,3,4,5,6,7,8}; // this array will be edited by TA during assessment...
 		
 		System.out.print("Initial Array: ");
 		for(int e: my_array)
