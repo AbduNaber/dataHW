@@ -7,6 +7,12 @@ public class preprocessor {
 		preprocessed_string = "";
 	}
 
+
+	/**
+	 * This method preprocesses the initial_string by capitalizing it and cleaning it from non-alphabetic characters.
+	 * @param void
+	 * @return void
+	 */
 	public void preprocess() {
 		// do not edit this method
 		capitalize();
@@ -15,6 +21,8 @@ public class preprocessor {
 	
 	/*
 	 * This method capitalizes the initial_string.
+	 * @param void
+	 * @return void
 	 */
 	private void capitalize() {
 		initial_string = initial_string.toUpperCase();
@@ -22,6 +30,8 @@ public class preprocessor {
 
 	/*
 	 * This method cleans the initial_string from non-alphabetic characters.
+	 * @param void
+	 * @return void
 	 */
 	private void clean() {
 		StringBuilder sb = new StringBuilder();
@@ -38,6 +48,8 @@ public class preprocessor {
 	
 	/*
 	 * This method returns the preprocessed string.
+	 * @param void
+	 * @return String
 	 */
 	public String get_preprocessed_string() {
 		return preprocessed_string;

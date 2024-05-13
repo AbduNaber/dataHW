@@ -17,6 +17,8 @@ public class decryptor {
 	/*
 	 * This method generates the keystream by repeating the key until it reaches the length of the ciphertext.
 	 * Then, it generates the plaintext by using the Vigenere cipher table.
+	 * @param void
+	 * @return void
 	 */
 	public void decrypt() {
 		// do not edit this method
@@ -25,6 +27,8 @@ public class decryptor {
 	}
 	/*
 	 * This method generates the keystream by repeating the key until it reaches the length of the ciphertext.
+	 * @param void
+	 * @return void
 	 */
 	private void generate_keystream() {
 		StringBuilder sb = new StringBuilder();
@@ -37,7 +41,8 @@ public class decryptor {
 
 	/*
 	 * This method generates the plaintext by using the Vigenere cipher table.
-	 * 
+	 * @param void
+	 * @return void
 	 */
 	private void generate_plain_text() {
 		// You must use map.get(x).keySet() with an iterator in this method
@@ -69,10 +74,19 @@ public class decryptor {
 
 	}
 
+
+	/**
+	 * This method returns the keystream.
+	 * @return String
+	 */
 	public String get_keystream() {
 		return keystream;
 	}
-	
+
+	/**
+	 * This method returns the plaintext.
+	 * @return String 
+	 */
 	public String get_plain_text() {
 		return plain_text;
 	}

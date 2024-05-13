@@ -18,6 +18,8 @@ public class encryptor {
 	/**
 	 * This method generates the keystream by repeating the key until it reaches the length of the plaintext.
 	 * Then, it generates the ciphertext by using the Vigenere cipher table.
+	 * @param void
+	 * @return void
 	 */
 	public void encrypt() {
 		// do not edit this method
@@ -27,6 +29,8 @@ public class encryptor {
 	
 	/**
 	 * This method generates the keystream by repeating the key until it reaches the length of the plaintext.
+	 * @param void
+	 * @return void
 	 */
 	private void generate_keystream() {
 		StringBuilder sb = new StringBuilder();
@@ -38,6 +42,8 @@ public class encryptor {
 	
 	/**
 	 * This method generates the ciphertext by using the Vigenere cipher table.
+	 * @param void
+	 * @return void
 	 */
 	private void generate_cipher_text() {
 		StringBuilder sb = new StringBuilder();
@@ -50,11 +56,18 @@ public class encryptor {
 		cipher_text = sb.toString();
 	}
 
-	
+	/**
+	 * This method returns the keystream.
+	 * @return String
+	 */	
 	public String get_keystream() {
 		return keystream;
 	}
-	
+
+	/**
+	 * This method returns the ciphertext.
+	 * @return String
+	 */
 	public String get_cipher_text() {
 		return cipher_text;
 	}

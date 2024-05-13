@@ -10,8 +10,7 @@ public class alphabet {
 	
 
 	/**
-	 * This constructor fills the english_alphabet set with the uppercase English alphabet letters.
-	 * Then, it fills the map with the Vigenere cipher table.
+	 * This is the constructor of the alphabet class. It calls the fill_english_alphabet and fill_map methods.
 	 */
 	public alphabet() {
 		// do not edit this method
@@ -21,6 +20,8 @@ public class alphabet {
 	
 	/**
 	 * This method fills the english_alphabet set with the uppercase English alphabet letters.
+	 * @param void
+	 * @return void
 	 */
 	private void fill_english_alphabet() {
 		// do not edit this method
@@ -31,6 +32,8 @@ public class alphabet {
 	
 	/**
 	 * This method fills the map with the Vigenere cipher table.
+	 * @param void
+	 * @return void
 	 */
 	private void fill_map() {
 		Iterator <Character> iter = english_alphabet.iterator();
@@ -57,6 +60,8 @@ public class alphabet {
 
 	/*
 	 * This method prints the Vigenere cipher table.
+	 * @param void
+	 * @return void
 	 */
 	public void print_map() {
 		// do not edit this method
@@ -71,6 +76,10 @@ public class alphabet {
 		
 	}
 
+	/**
+	 * This method returns the map.
+	 * @return Map
+	 */
 	public Map get_map() {
 		return map;
 	}
