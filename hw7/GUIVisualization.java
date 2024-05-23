@@ -8,15 +8,15 @@ public class GUIVisualization extends JFrame {
     private List<Long> dataPointsY; // List to store y-axis data points
     private String plotType; // Type of plot ("line" or "scatter")
 
-    public GUIVisualization(String plotType, List<Integer> dataPointsX, List<Long> dataPointsY) {
+    public GUIVisualization(String plotType, List<Integer> dataPointsX, List<Long> dataPointsY, String title) {
         this.plotType = plotType; // Set the plot type
         this.dataPointsX = new ArrayList<>(); // Initialize x-axis data points list
         this.dataPointsY = new ArrayList<>(); // Initialize y-axis data points list
 
-        dataPointsX.addAll(dataPointsX); // Add x-axis data points
-        dataPointsY.addAll(dataPointsY); // Add y-axis data points
+        this.dataPointsX.addAll(dataPointsX); // Add x-axis data points
+        this.dataPointsY.addAll(dataPointsY); // Add y-axis data points
 
-        setTitle("Performance Graph Visualization"); // Set the title of the window
+        setTitle(title); // Set the title of the window
         setSize(800, 600); // Set the size of the window
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Set the default close operation
         setLocationRelativeTo(null); // Center the window on the screen
@@ -89,23 +89,24 @@ public class GUIVisualization extends JFrame {
         g2.setColor(Color.BLUE); // Set color for the graph
         g2.setStroke(new BasicStroke(2f)); // Set stroke for the graph
 
+        // Draw the graph
         if (plotType.equals("line")) {
             for (int i = 0; i < dataPointsX.size() - 1; i++) {
                 int x1 = i * (width - padding * 2 - labelPadding) / (dataPointsX.size() - 1) + padding + labelPadding;
-                int y1 = height - padding - labelPadding - (int) ((dataPointsY.get(i) * 1.0) / getMaxYValue() * (height - padding * 2 - labelPadding));
-                int x2 = (i + 1) * (width - padding * 2 - labelPadding) / (dataPointsX.size() - 1) + padding + labelPadding;
-                int y2 = height - padding - labelPadding - (int) ((dataPointsY.get(i + 1) * 1.0) / getMaxYValue() * (height - padding * 2 - labelPadding));
+                int y1 = height - padding - labelPadding - (int) ((Math.log(dataPointsY.get(i) * 1.0)) / Math.log(getMaxYValue()) * (height - padding * 2 - labelPadding));
+                int x2 = (i + 1) * (width - padding * 2 - labelPadding) / (dataPointsY.size() - 1) + padding + labelPadding;
+                int y2 = height - padding - labelPadding - (int) ((Math.log(dataPointsY.get(i + 1) * 1.0)) / Math.log(getMaxYValue()) * (height - padding * 2 - labelPadding));
                 g2.drawLine(x1, y1, x2, y2); // Draw line between data points
             }
         } else if (plotType.equals("scatter")) {
             for (int i = 0; i < dataPointsX.size(); i++) {
                 int x = i * (width - padding * 2 - labelPadding) / (dataPointsX.size() - 1) + padding + labelPadding;
-                int y = height - padding - labelPadding - (int) ((dataPointsY.get(i) * 1.0) / getMaxYValue() * (height - padding * 2 - labelPadding));
+                int y = height - padding - labelPadding - (int) ((Math.log(dataPointsY.get(i) * 1.0)) / Math.log(getMaxYValue()) * (height - padding * 2 - labelPadding));
                 g2.fillOval(x - 3, y - 3, 6, 6); // Draw data point as a small circle
             }
-        }
 
-        g2.setStroke(oldStroke); // Restore original stroke
+            g2.setStroke(oldStroke);
+        }
     }
 
     private long getMaxYValue() {
@@ -116,22 +117,4 @@ public class GUIVisualization extends JFrame {
         return max; // Return maximum y value
     }
 
-    public static void main(String[] args) {
-        List<Integer> dataPointsX = new ArrayList<>(); // Create a list to store x-axis data points
-        List<Long> dataPointsY = new ArrayList<>(); // Create a list to store y-axis data points
-        for (int i = 0; i < 10; i++) {
-            dataPointsX.add(i); // Add x-axis data points
-            dataPointsY.add((long) (Math.random() * 100)); // Add y-axis data points
-        }
-
-
-        SwingUtilities.invokeLater(new Runnable() { // Fix: Pass a lambda expression that implements the Runnable interface
-            @Override
-            public void run() {
-                String plotType = "line"; // Change to "scatter" for scatter plot
-                GUIVisualization frame = new GUIVisualization(plotType, dataPointsX, dataPointsY); // Create a new instance of GUIVisualization
-                frame.setVisible(true); // Make the frame visible
-            }
-        });
-    }
 }

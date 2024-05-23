@@ -2,7 +2,7 @@
 JC = javac -d ./bin
 
 # Flags
-JFLAGS = -g
+JFLAGS = -g 
 
 # Source files
 SRCS = AVLTree.java GUIVisualization.java InputGenerator.java Main.java Stock.java StockDataManager.java
@@ -24,7 +24,7 @@ clean:
 
 
 # create variable for the number of ADD, REMOVE, UPDATE, SEARCH . you can change the value of these variables to test the program
-ADD = 1000
+ADD = 100
 REMOVE = 0
 UPDATE = 0
 SEARCH = 0

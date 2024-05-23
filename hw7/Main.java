@@ -2,12 +2,19 @@ import java.io.BufferedReader;
 
 import java.io.FileReader;
 import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import javax.swing.SwingUtilities;
 
 public class Main {
     public static void main(String[] args) {
 
-        String inputFile = "input.txt";
+
+        ArrayList<Integer> xAxis; 
+        Map<String,ArrayList<Long>> yAxis = new HashMap<>();
+
+        String inputFile = args[0];
         StockDataManager manager = new StockDataManager();
 
         try (BufferedReader br = new BufferedReader(new FileReader(inputFile))) {
@@ -19,8 +26,42 @@ public class Main {
             e.printStackTrace();
             System.out.println("Error read input file: " + inputFile);
         }   
+        //manager.getAvlTree().postOrderTraversal();
         
-       
+        
+        xAxis = new ArrayList<>();
+        for(int i = 1; i < 100; i++)
+        {
+            xAxis.add(i * 100);
+        }
+
+        yAxis.put("ADD", new ArrayList<>());
+        yAxis.put("REMOVE", new ArrayList<>());
+        yAxis.put("SEARCH", new ArrayList<>());
+        yAxis.put("UPDATE", new ArrayList<>());
+
+        for(int i = 1; i < 100; i++)
+        {
+            System.out.println(i);
+            performPerformanceAnalysis(manager, i * 100, xAxis, yAxis);
+        }
+
+        // Create GUIVisualizations for the performance analysis
+        SwingUtilities.invokeLater(() -> {
+            String plotType = "scatter"; // Change to "scatter" for scatter plot
+            GUIVisualization frame = new GUIVisualization(plotType, xAxis, yAxis.get("ADD"), "Add"); // Create a new instance of GUIVisualization
+            frame.setVisible(true); // Make the frame visible
+        
+            GUIVisualization frame2 = new GUIVisualization(plotType, xAxis, yAxis.get("REMOVE"), "Remove"); // Create a new instance of GUIVisualization
+            frame2.setVisible(true); // Make the frame visible
+        
+            GUIVisualization frame3 = new GUIVisualization(plotType, xAxis, yAxis.get("SEARCH"), "Search"); // Create a new instance of GUIVisualization
+            frame3.setVisible(true); // Make the frame visible
+        
+            GUIVisualization frame4 = new GUIVisualization(plotType, xAxis, yAxis.get("UPDATE"), "Update "); // Create a new instance of GUIVisualization
+            frame4.setVisible(true); // Make the frame visible
+        
+        });
 
     }
 
@@ -52,7 +93,7 @@ public class Main {
         }
     }
 
-    private static void performPerformanceAnalysis(StockDataManager manager, int size) {
+    private static void performPerformanceAnalysis(StockDataManager manager, int size, ArrayList<Integer> xAxis, Map<String,ArrayList<Long>> yAxis) {
         long startTime, endTime;
         // Measure time for ADD operation
         startTime = System.nanoTime();
@@ -61,6 +102,7 @@ public class Main {
         }
         endTime = System.nanoTime();
         System.out.println("Average ADD time: " + (endTime - startTime) / size + " ns");
+        yAxis.get("ADD").add((endTime - startTime) / size);
 
         // Measure time for SEARCH operation
         startTime = System.nanoTime();
@@ -69,6 +111,17 @@ public class Main {
         }
         endTime = System.nanoTime();
         System.out.println("Average SEARCH time: " + (endTime - startTime) / size + " ns");
+        yAxis.get("SEARCH").add((endTime - startTime) / size);
+
+         // Measure time for UPDATE operation
+         startTime = System.nanoTime();
+         for (int i = 0; i < size; i++) {
+             manager.updateStock("SYM" + i, "SYM" + i, Math.random() * 100, (long) (Math.random() * 1000000), (long) (Math.random() * 1000000000));
+         }
+         endTime = System.nanoTime();
+         System.out.println("Average UPDATE time: " + (endTime - startTime) / size + " ns");
+         yAxis.get("UPDATE").add((endTime - startTime) / size);
+
 
         // Measure time for REMOVE operation
         startTime = System.nanoTime();
@@ -77,5 +130,9 @@ public class Main {
         }
         endTime = System.nanoTime();
         System.out.println("Average REMOVE time: " + (endTime - startTime) / size + " ns");
+        yAxis.get("REMOVE").add((endTime - startTime) / size);
+
+       
+
     }
 }
