@@ -89,26 +89,24 @@ public class GUIVisualization extends JFrame {
         g2.setColor(Color.BLUE); // Set color for the graph
         g2.setStroke(new BasicStroke(2f)); // Set stroke for the graph
 
-        // Draw the graph
         if (plotType.equals("line")) {
             for (int i = 0; i < dataPointsX.size() - 1; i++) {
                 int x1 = i * (width - padding * 2 - labelPadding) / (dataPointsX.size() - 1) + padding + labelPadding;
-                int y1 = height - padding - labelPadding - (int) ((Math.log(dataPointsY.get(i) * 1.0)) / Math.log(getMaxYValue()) * (height - padding * 2 - labelPadding));
-                int x2 = (i + 1) * (width - padding * 2 - labelPadding) / (dataPointsY.size() - 1) + padding + labelPadding;
-                int y2 = height - padding - labelPadding - (int) ((Math.log(dataPointsY.get(i + 1) * 1.0)) / Math.log(getMaxYValue()) * (height - padding * 2 - labelPadding));
+                int y1 = height - padding - labelPadding - (int) ((dataPointsY.get(i) * 1.0) / getMaxYValue() * (height - padding * 2 - labelPadding));
+                int x2 = (i + 1) * (width - padding * 2 - labelPadding) / (dataPointsX.size() - 1) + padding + labelPadding;
+                int y2 = height - padding - labelPadding - (int) ((dataPointsY.get(i + 1) * 1.0) / getMaxYValue() * (height - padding * 2 - labelPadding));
                 g2.drawLine(x1, y1, x2, y2); // Draw line between data points
             }
         } else if (plotType.equals("scatter")) {
             for (int i = 0; i < dataPointsX.size(); i++) {
                 int x = i * (width - padding * 2 - labelPadding) / (dataPointsX.size() - 1) + padding + labelPadding;
-                int y = height - padding - labelPadding - (int) ((Math.log(dataPointsY.get(i) * 1.0)) / Math.log(getMaxYValue()) * (height - padding * 2 - labelPadding));
+                int y = height - padding - labelPadding - (int) ((dataPointsY.get(i) * 1.0) / getMaxYValue() * (height - padding * 2 - labelPadding));
                 g2.fillOval(x - 3, y - 3, 6, 6); // Draw data point as a small circle
             }
-
-            g2.setStroke(oldStroke);
         }
-    }
 
+        g2.setStroke(oldStroke); // Restore original stroke
+    }
     private long getMaxYValue() {
         long max = Long.MIN_VALUE; // Initialize max value to minimum possible value
         for (Long y : dataPointsY) {

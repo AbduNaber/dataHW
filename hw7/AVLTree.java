@@ -3,13 +3,12 @@ public class AVLTree {
     private static class Node
     {
         private Stock data;
-        private Node left;
-        private Node right;
+        private Node left,right;
         private int height;
 
-        public Node(Stock _data)
+        public Node(Stock data)
         {
-            this.data = _data;
+            this.data = data;
             this.height = 1;
         }
     }
@@ -19,7 +18,7 @@ public class AVLTree {
 
     /**
      * Insert a stock
-     * @param stock stock to be inserted
+     * @param stock 
      */
     public void insert(Stock stock)
     {
@@ -27,31 +26,8 @@ public class AVLTree {
     }
 
     /**
-     * Helper recursive method
-     * @param node localroot of the tree
-     * @param stock stock to be inserted
-     * @return inserted and balanced tree
-     */
-    private Node insert(Node node, Stock stock)
-    {
-        if(node == null)
-            return new Node(stock);
-        else if(node.data.getSymbol().compareTo(stock.getSymbol()) == 0)
-            return node;
-        else if(node.data.getSymbol().compareTo(stock.getSymbol()) < 0)
-            node.right = insert(node.right, stock);
-        else 
-            node.left = insert(node.left, stock);
-
-        node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
-
-        return balance(node);
-
-    }
-    
-    /**
      * Delete a stock
-     * @param symbol symbol of the stock to be deleted
+     * @param symbol 
      */
     public void delete(String symbol)
     {
@@ -59,10 +35,10 @@ public class AVLTree {
     }
 
     /**
-     * Helper recursive delete method
-     * @param node localroot of the tree
-     * @param symbol symbol of the stock to be deleted
-     * @return given symbol deleted and balanced tree
+     * Delete a node with recursive
+     * @param node
+     * @param symbol
+     * @return
      */
     private Node delete(Node node, String symbol) {
         if (node == null) {
@@ -97,23 +73,34 @@ public class AVLTree {
         return balance(node);
     }
 
-    /**
-     * gets the min node
-     * @param node the subtree's root
-     * @return min node
-     */
-    private Node getMinValueNode(Node node) {
-        Node current = node;
-        while (current.left != null) {
-            current = current.left;
-        }
-        return current;
-    }
 
     /**
-     * Search for a stock in the tree with the given symbol
-     * @param symbol symbol of the stock to be searched
-     * @return stock if found, null otherwise
+     * Insert a stock with recursive
+     * @param node
+     * @param stock
+     * @return
+     */
+    private Node insert(Node node, Stock stock)
+    {
+        if(node == null)
+            return new Node(stock);
+        
+        if(stock.getSymbol().compareTo(node.data.getSymbol()) < 0)
+            node.left = insert(node.left, stock);
+        else if(stock.getSymbol().compareTo(node.data.getSymbol()) > 0)
+            node.right = insert(node.right, stock);
+        else
+            return node;
+
+        node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
+        return balance(node);
+    }
+    
+
+        /**
+     * Search for a stock 
+     * @param symbol 
+     * @return stock
      */
     public Stock search(String symbol)
     {
@@ -122,10 +109,10 @@ public class AVLTree {
     }
 
     /**
-     * Helper recursive search method
-     * @param node the tree that will be searched
-     * @param symbol the symbol of the stock to be searched
-     * @return Node if found, null otherwise
+     * Search with recursive
+     * @param node 
+     * @param symbol 
+     * @return Node 
      */
     private Node search(Node node, String symbol)
     {
@@ -139,11 +126,26 @@ public class AVLTree {
             return search(node.left, symbol);
     }
 
-    //BALANCING METHODS
     /**
-     * Balancing the tree
-     * @param node the unbalanced node
-     * @return balanced tree
+     * get the min node
+     * @param node 
+     * @return Node
+     */
+    private Node getMinValueNode(Node node) {
+        Node current = node;
+        while (current.left != null) {
+            current = current.left;
+        }
+        return current;
+    }
+
+
+
+    
+    /**
+     * Balancing  tree
+     * @param node 
+     * @return Node
      */
     private Node balance(Node node) {
         int balanceFactor = getBalanceFactor(node);
@@ -177,24 +179,20 @@ public class AVLTree {
 
 
     
+
+        
     /**
-     * @param y Node to be rotated right
-     * @return right rotation of the node
+     * get the height of given node
+     * @param node given node
+     * @return height of the node
      */
-    private Node rotateRight(Node y)
+    private int getHeight(Node node)
     {
-        Node x = y.left;
-        Node temp = x.right;
-
-        x.right = y;
-        y.left = temp;
-
-        y.height = updateHeight(y);
-        x.height = updateHeight(x);
-
-        return x;
+        if(node == null)
+            return 0;
+        else
+            return node.height;
     }
-
     /**
      * @param x Node to be rotated left
      * @return left rotation of the node
@@ -212,33 +210,6 @@ public class AVLTree {
         
         return y;
     }
-
-
-    
-    
-    /**
-     * get the height of given node
-     * @param node given node
-     * @return height of the node
-     */
-    private int getHeight(Node node)
-    {
-        if(node == null)
-            return 0;
-        else
-            return node.height;
-    }
-
-    /**
-     * Update the height of given node
-     * @param node Node to update height
-     * @return updated height
-     */
-    private int updateHeight(Node node)
-    {
-        return Math.max(getHeight(node.left), getHeight(node.right)) +1;
-    }
-
     /**
      * Get Balance Factor
      * @param node Node to get balance factor
@@ -252,8 +223,55 @@ public class AVLTree {
             return getHeight(node.left) - getHeight(node.right);
     }
 
+        /**
+     * @param y Node to be rotated right
+     * @return right rotation of the node
+     */
+    private Node rotateRight(Node y)
+    {
+        Node x = y.left;
+        Node temp = x.right;
 
-    //TRAVERSAL METHODS
+        x.right = y;
+        y.left = temp;
+
+        y.height = updateHeight(y);
+        x.height = updateHeight(x);
+
+        return x;
+    }
+
+
+    /**
+     * Update the height of given node
+     * @param node Node to update height
+     * @return updated height
+     */
+    private int updateHeight(Node node)
+    {
+        return Math.max(getHeight(node.left), getHeight(node.right)) +1;
+    }
+
+
+
+
+     /**
+     * Postorder traversal of the tree
+     */
+    public void postorder()
+    {
+        postorder(root);
+    }
+
+    private void postorder(Node root)
+    {
+        if(root != null)
+        {
+            System.out.println(root.data);
+            postorder(root.left);
+            postorder(root.right);
+        }
+    }
     
     /**
      * Inorder traversal of the tree
@@ -289,21 +307,5 @@ public class AVLTree {
         }
     }
 
-    /**
-     * Postorder traversal of the tree
-     */
-    public void postorder()
-    {
-        postorder(root);
-    }
-
-    private void postorder(Node root)
-    {
-        if(root != null)
-        {
-            System.out.println(root.data);
-            postorder(root.left);
-            postorder(root.right);
-        }
-    }
+   
 }

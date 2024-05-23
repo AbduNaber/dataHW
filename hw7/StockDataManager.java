@@ -5,7 +5,13 @@ public class StockDataManager {
         avlTree = new AVLTree();
     }
 
-    // Add or update a stock
+    /**
+     * adds or updates stock. if it is found then update.
+     * @param symbol
+     * @param price
+     * @param volume
+     * @param marketCap
+     */
     public void addOrUpdateStock(String symbol, double price, long volume, long marketCap) {
         Stock existingStock = avlTree.search(symbol);
         if (existingStock != null) {
@@ -18,25 +24,43 @@ public class StockDataManager {
         }
     }
 
-    // Remove a stock
+    /**
+     * Removes stock in AVL tree
+     * @param symbol
+     */
     public void removeStock(String symbol) {
         avlTree.delete(symbol);
     }
 
-    // Search for a stock
+    /**
+     * Search Stock in AVL tree
+     * @param symbol
+     * @return Stock
+     */
     public Stock searchStock(String symbol) {
         return avlTree.search(symbol);
     }
 
-    // Update stock details
-    public void updateStock(String symbol,String newSymbol, double newPrice, long newVolume, long newMarketCap) {
+    /**
+     * Updates STOCK
+     * @param symbol
+     * @param newPrice
+     * @param newVolume
+     * @param newMarketCap
+     */
+    public void updateStock(String symbol, double newPrice, long newVolume, long newMarketCap) {
         // delete the stock with the old symbol
-        avlTree.delete(symbol);
-        // add the stock with the new symbol
-        Stock newStock = new Stock(newSymbol, newPrice, newVolume, newMarketCap);
-        avlTree.insert(newStock);
+       Stock stock = avlTree.search(symbol);
+         if(stock != null)
+         {
+            stock.setPrice(newPrice);
+            stock.setVolume(newVolume);
+            stock.setMarketCap(newMarketCap);
+
+         }
 
     }
+    
     public AVLTree getAvlTree() {
         return avlTree;
     }
